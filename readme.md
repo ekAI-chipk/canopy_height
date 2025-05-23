@@ -55,4 +55,8 @@ Triển khai mô hình bằng cách chạy lệnh sau trong terminal:
 bash global_canopy_height/gchm/bash/deploy_example.sh
 ```
 
+File bổ sung: `meta_run_chm_model.ipynb`
+Đánh giá kết quả các pretrained model của dự án Meta-HighResCanopyHeight
+
+
 
