@@ -1,4 +1,4 @@
-# Global Canopy Height - Hướng dẫn sử dụng
+# Global Canopy Height
 
 ## Requirements
 
