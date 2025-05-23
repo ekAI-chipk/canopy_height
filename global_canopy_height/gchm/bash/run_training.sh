@@ -18,7 +18,7 @@
 # NOTE test:  --cpus-per-task=18 --mem-per-cpu=21G (total max RAM 378 GB)
 
 # Set path to repository
-CODE_PATH="/mnt/data2tb/global-canopy-height-model"
+CODE_PATH="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global_canopy_height_model"
 
 cd ${CODE_PATH}
 source gchm/bash/config.sh
@@ -57,8 +57,6 @@ channels=12
 patch_size=15
 
 # loss
-# return_variance=True
-# loss_key='GNLL'
 return_variance=False
 # loss_key='RMSE'
 loss_key='shrinkage'
@@ -71,10 +69,9 @@ lr_milestones=( 400 700 )
 max_grad_value=1e3
 l2_lambda=0
 
-batch_size=512 # 64 --> 256
-nb_epoch=1000
+batch_size=64 # 64 --> 256
+nb_epoch=1500
 # iterations_per_epoch=5000 # if None: one epoch corresponds to the full dataset len(dl_train)
-# iterations_per_epoch=5000 # train with full dataset
 iterations_per_epoch=0 # train with full dataset
 
 # Note that SliceBatchSampler expects the samples to be shuffled already in the h5 file.
@@ -117,8 +114,8 @@ fi
 echo 'out_dir:' ${out_dir}
 
 # add 2 lines
-export PYTHONPATH="/mnt/data2tb/global-canopy-height-model:$PYTHONPATH"
-PYTHON="$HOME/anaconda3/envs/project_env/bin/python"
+export PYTHONPATH="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global-canopy-height-model:$PYTHONPATH"
+PYTHON="/mnt/fwgpu/hdd12tb/miniconda3/envs/chme/bin/python"
 
 ${PYTHON} gchm/train_val.py --out_dir=${out_dir} \
                           --num_workers=${num_workers} \

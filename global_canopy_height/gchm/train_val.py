@@ -129,7 +129,7 @@ if __name__ == "__main__":
         train_input_mean, train_input_std = compute_train_mean_std(ds_train=ds_train_raw, data_key='inputs',
                                                                    num_workers=args.num_workers,
                                                                    batch_size=128)
-
+        
     else:
         print('loading input statistics of training data...')
         train_input_mean = np.load(os.path.join(args.data_stats_dir, 'train_input_mean.npy'))
@@ -157,7 +157,7 @@ if __name__ == "__main__":
             train_target_mean, train_target_std = compute_train_mean_std(ds_train=ds_train_raw, data_key='labels_mean',
                                                                          num_workers=args.num_workers,
                                                                          batch_size=128)
-
+            
         else:
             print('loading target statistics of training data...')
             train_target_mean = np.load(os.path.join(args.data_stats_dir, 'train_target_mean.npy'))

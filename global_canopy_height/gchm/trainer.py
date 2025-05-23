@@ -300,7 +300,7 @@ class Trainer:
                 'scheduler': self.scheduler.state_dict()},
                 self.checkpoint_path)
             
-            if epoch % 5 == 0:
+            if epoch % 50 == 0:
                 print(f'saving checkpoint at epoch {epoch}...')
                 folder_path = os.path.join(self.args.out_dir, "checkpoints")
                 if not os.path.exists(folder_path):

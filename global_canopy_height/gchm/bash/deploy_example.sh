@@ -1,19 +1,18 @@
 #!/bin/bash
+# CODE_PATH="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global_canopy_height_model"
+# cd ${CODE_PATH}
 
-# DEPLOY_IMAGE_PATH="./deploy_example/sentinel2/2020/Download1_S2A_MSIL2A_20200218T032811_N0500_R018_T48QWJ_20230625T231344.zip"
-DEPLOY_IMAGE_PATH="./deploy_example/sentinel2/2020/Download2_S2A_MSIL2A_20200717T032541_N0500_R018_T48QWH_20230425T174205.zip"
-# DEPLOY_IMAGE_PATH="./deploy_example/sentinel2/2020/Download3_S2A_MSIL2A_20200826T032541_N0500_R018_T48QWL_20230418T063839.zip"
-GCHM_DEPLOY_DIR="./deploy_example/predictions/test"
+DEPLOY_IMAGE_PATH="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global_canopy_height_model/deploy_example/sentinel2/2020/S2A_MSIL2A_20200623T103031_N0214_R108_T32TMT_20200623T142851.zip"
+GCHM_DEPLOY_DIR="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global_canopy_height_model/deploy_example/predictions/2020"
 
-# GCHM_MODEL_DIR="./trained_models/GLOBAL_GEDI_2019_2020"
-GCHM_MODEL_DIR="/mnt/data2tb/global-canopy-height-model/model2train/"
-# GCHM_MODEL_DIR="/mnt/data2tb/global-canopy-height-model/output_model"
-GCHM_NUM_MODELS=3
+GCHM_MODEL_DIR="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global_canopy_height_model/model2train"
+
+GCHM_NUM_MODELS=1
 GCHM_MODEL_ID=0
-filepath_failed_image_paths="./deploy_example/log_failed.txt"
+filepath_failed_image_paths="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global_canopy_height_model/deploy_example/log_failed.txt"
 
 GCHM_DOWNLOAD_FROM_AWS="False"
-GCHM_DEPLOY_SENTINEL2_AWS_DIR="./deploy_example/sentinel2_aws"
+GCHM_DEPLOY_SENTINEL2_AWS_DIR="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/global_canopy_height_model/deploy_example/sentinel2_aws"
 
 # create directories
 mkdir -p ${GCHM_DEPLOY_DIR}
@@ -22,7 +21,7 @@ mkdir -p ${GCHM_DEPLOY_SENTINEL2_AWS_DIR}
 python3 gchm/deploy.py --model_dir=${GCHM_MODEL_DIR} \
                        --deploy_image_path=${DEPLOY_IMAGE_PATH} \
                        --deploy_dir=${GCHM_DEPLOY_DIR} \
-                       --deploy_patch_size=512 \
+                       --deploy_patch_size=125 \
                        --num_workers_deploy=4 \
                        --num_models=${GCHM_NUM_MODELS} \
                        --model_id=${GCHM_MODEL_ID} \

@@ -27,9 +27,9 @@ mkdir -p ${GCHM_DEPLOY_IMAGE_PATHS_LOG_DIR}
 # ----------------------------
 
 # export GCHM_TRAINING_DATA_DIR="/cluster/work/igp_psr/nlang/global_vhm/gchm_public_data/training_data/GLOBAL_GEDI_2019_2020/all_shuffled"
-export GCHM_TRAINING_DATA_DIR='/mnt/data2tb/global-canopy-height-model/data/merged_shuffled'
+export GCHM_TRAINING_DATA_DIR="/mnt/ekaigpu/ekai_hdd12tb/code/trivt/data/merged_shuffled"
 export GCHM_TRAINING_EXPERIMENT_DIR="model2train"
-# Set path to python
-export PYTHON="$HOME/venvs/project_env/bin/python"
+# # Set path to python
+export PYTHON="/mnt/fwgpu/hdd12tb/miniconda3/envs/chme/bin/python"
 
 

@@ -189,7 +189,7 @@ def make_concat_dataset(paths_h5, input_transforms=None, target_transforms=None,
                                            path_bin_weights=path_bin_weights,
                                            weight_key=weight_key,
                                            mask_with_scl=False))
-        
+
     if len(datasets) == 1:
         # return the custom dataset to work with a list of batched indices in "sampler"
         return datasets[0]

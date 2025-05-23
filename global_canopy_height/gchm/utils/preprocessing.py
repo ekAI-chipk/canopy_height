@@ -7,6 +7,7 @@ from torch.utils.data import SubsetRandomSampler
 
 from gchm.utils.sampler import SliceBatchSampler, SubsetSequentialSampler
 
+
 def compute_train_mean_std(ds_train, data_key, num_samples=None, num_workers=8, batch_size=128, return_distribution=False, bin_edges=None):
     """
     Compute training statistics (mean and standard deviation) per tensor channel (with channel axis=1).

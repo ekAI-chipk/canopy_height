@@ -1,85 +1,58 @@
-# Thư mục `process_data`
+# Global Canopy Height - Hướng dẫn sử dụng
 
-Thư mục này chứa các file `.py` phục vụ cho việc xử lý dữ liệu **GEDI** và **Sentinel-2**.
+## Requirements
 
----
+```bash
+conda create -n chme python=3.10
+conda activate chme
+pip install -r global_canopy_height/requirements.txt
+conda install -c conda-forge gdal
+```
 
-## 1. `unzip_file.py`
+## Data
 
-**Chức năng:**  
-Giải nén các file `.zip` đã tải về từ Google Drive.
+### 1. Tải dữ liệu S2 và GEDI từ Google Earth Engine (GEE) về Google Drive
+- **Sử dụng notebook**: `download_data/download_data.ipynb`
+- **Chức năng**: Tải ảnh Sentinel-2 (S2) và dữ liệu GEDI từ GEE và lưu vào Google Drive.
 
-**Tham số đầu vào từ terminal:**
+### 2. Tải dữ liệu S2 và GEDI từ Google Drive dưới dạng `.zip` và giải nén
 
-- `folder_path`: Đường dẫn tới thư mục chứa các file `.zip`.
-- `extract_folder_path`: Đường dẫn tới thư mục đích để giải nén các file vào.
+- **Sử dụng script**: `python process_data/unzip_file.py`
+- **Chức năng**: Giải nén các file `.zip` đã tải từ Google Drive về.
+- **Tham số đầu vào từ terminal**:
+  - `Folder_path`: đường dẫn tới thư mục chứa các file `.zip`
+  - `Extract_folder_path`: đường dẫn tới thư mục đích để giải nén các file
 
----
+### 4. Tạo các file `.h5` từ các patch
 
-## 2. `crop_images.py`
+- **Sử dụng script**: `process_data/creat_h5file.py`
+- **Chức năng**: Tạo các file `.h5` từ các patch đã được crop.
+- **Tham số đầu vào từ terminal**:
+  - `Data_folder`: thư mục lưu trữ các patch
+  - `Output_folder`: nơi lưu trữ các file `.h5` được tạo ra
 
-**Chức năng:**  
-Cắt ảnh Sentinel-2 và GEDI thành các patch nhỏ kích thước 15x15 pixel.
+### 5. Chia các file `.h5` thành các tập train, test, val
 
-**Tham số đầu vào từ terminal:**
+- **Sử dụng script**: `process_data/group_h5file.py`
+- **Chức năng**: Phân chia các file `.h5` đã tạo vào các thư mục `train`, `val`, và `test` để phục vụ huấn luyện, xác thực và kiểm tra mô hình.
+- **Yêu cầu chỉnh sửa trong code**:
+  - `source_folder`: đường dẫn chứa các file `.h5` gốc
+  - `base_folder`: đường dẫn chứa các thư mục con `train`, `val`, `test` để chia dữ liệu vào
 
-- `data_folder`: Thư mục chứa dữ liệu Sentinel-2 và GEDI.
-- `crop_folder_path`: Đường dẫn tới thư mục lưu các patch đã được cắt.
+## Training
 
----
+Chạy script huấn luyện mô hình bằng lệnh sau:
 
-## 3. `creat_h5file.py`
+```
+bash global_canopy_height/gchm/bash/run_training.sh
+```
 
-**Chức năng:**  
-Tạo các file `.h5` từ các patch đã được crop.
+## Deploying
 
-**Tham số đầu vào từ terminal:**
+Triển khai mô hình bằng cách chạy lệnh sau trong terminal:
 
-- `data_folder`: Thư mục lưu các patch.
-- `output_folder`: Thư mục lưu các file `.h5` đầu ra.
-
----
-
-## 4. `group_h5file.py`
-
-**Chức năng:**  
-Chia các file `.h5` đã tạo thành 3 nhóm: `train`, `test`, `val` để sử dụng trong huấn luyện và đánh giá mô hình.
-
-**Cách sử dụng:**
-- Cần chỉnh sửa trực tiếp trong file các biến sau:
-  - `source_folder`: Thư mục chứa các file `.h5` gốc.
-  - `base_folder`: Thư mục chứa các thư mục con `val/`, `test/`, `train/` để phân chia file `.h5` vào.
-
----
-
-## 5. `replace_zeros.py`
-
-**Chức năng:**  
-Thay thế các giá trị bằng `0` thành `NaN` trong dữ liệu GEDI của các file `.h5` — dùng khi dữ liệu bị xử lý sai (ví dụ như các pixel không có dữ liệu bị gán bằng `0`).
-
----
-# Thư mục `download_data`
-
-Thư mục này chứa **duy nhất một file Jupyter Notebook (.ipynb)** dùng để tải ảnh GEDI và Sentinel-2 từ Google Earth Engine (GEE) về Google Drive.
-
-## Nội dung:
-- **File notebook** thực hiện việc:
-  - Truy cập và xử lý ảnh vệ tinh từ GEE.
-  - Lưu kết quả (ảnh GEDI và Sentinel-2) vào Google Drive để sử dụng trong các bước xử lý dữ liệu tiếp theo.
-
----
-
-# Thư mục `global_canopy_height`
-
-Thư mục này chứa **source code chính** cho việc huấn luyện mô hình dự đoán chiều cao tán cây toàn cầu từ dữ liệu ảnh vệ tinh.
-
-## Nội dung:
-- Các script Python phục vụ:
-  - Định nghĩa kiến trúc mô hình.
-  - Thiết lập các tham số huấn luyện (optimizer, loss function,...).
-  - Thực hiện huấn luyện, kiểm thử, và đánh giá mô hình.
-  - Lưu mô hình đã huấn luyện và tạo ra bản đồ dự đoán chiều cao.
-
----
+```
+bash global_canopy_height/gchm/bash/deploy_example.sh
+```
 
 

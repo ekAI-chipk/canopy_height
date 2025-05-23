@@ -12,13 +12,6 @@ import time
 import botocore
 import urllib3
 
-# from gchm.models.architectures import Architectures
-# from gchm.utils.transforms import Normalize, NormalizeVariance, denormalize
-# from gchm.datasets.dataset_sentinel2_deploy import Sentinel2Deploy
-# from gchm.utils.gdal_process import save_array_as_geotif
-# from gchm.utils.parser import load_args_from_json, str2bool, str_or_none
-# from gchm.utils.aws import download_and_zip_safe_from_aws
-
 from models.architectures import Architectures
 from utils.transforms import Normalize, NormalizeVariance, denormalize
 from datasets.dataset_sentinel2_deploy import Sentinel2Deploy
@@ -31,7 +24,7 @@ DEVICE = torch.device("cuda:0")
 print('DEVICE: ', DEVICE, torch.cuda.get_device_name(0))
 gdal.UseExceptions()
 
-
+print("All imports done")
 def setup_parser():
 
     parser = argparse.ArgumentParser()
@@ -253,10 +246,8 @@ if __name__ == "__main__":
 
     # Load latest weights from checkpoint file (alternative load best val epoch from best_weights.pt)
     print('Loading model weights from latest checkpoint ...')
-    # checkpoint_path = "model2train/model_0/best_weights.pt"
-    # model_weights = torch.load(checkpoint_path, map_location='cuda', weights_only=True)
- 
     checkpoint_path = Path(args.model_dir) / 'checkpoint.pt'
+    # checkpoint_path = "/mnt/data2tb/global-canopy-height-model/model2train/model_0/checkpoints/checkpoint.pt"
     checkpoint = torch.load(checkpoint_path, map_location='cuda')
     model_weights = checkpoint['model_state_dict']
 
