@@ -3,10 +3,10 @@ import shutil
 import re
 
 # Define source folder
-source_folder = "../h5_filter_outlier"
+source_folder = "../h5"
 
 # Define destination folders inside "parts_shuffle"
-base_folder = "../global-canopy-height-model/data/parts_shuffled"
+base_folder = "../data/parts_shuffled"
 train_folder = os.path.join(base_folder, "train")
 test_folder = os.path.join(base_folder, "test")
 val_folder = os.path.join(base_folder, "val")
